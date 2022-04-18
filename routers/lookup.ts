@@ -1,101 +1,103 @@
-import express from "express";
-import axios from "axios";
-const router: express.Router = express.Router();
+import express, { Router, Request, Response, NextFunction } from "express";
+import { configIpSources, configDomainSources } from "../config/sourceConfig";
+import { getInfo } from "../utils/getInfo";
+import { get } from "../utils/workerPool";
+import { logger, validSources } from "../config/constants";
+const router: Router = express.Router();
 
 type ValidData = {
   validIp: boolean;
   validDomain: boolean;
+  validSrc: Array<string>;
 };
 
-function validateData(ip: string, domain: string): ValidData {
-    let validData: ValidData = { validIp: false, validDomain: false };
-  
-    if (/^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/.test(ip))
-      validData.validIp = true;
-  
-    if (
-      /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(
-        domain
-      )
+function validateData(ip: string, domain: string, sources: string): ValidData {
+  logger.info(`validateData ip: ${ip} domain: ${domain} sources: ${sources}`);
+  let validData: ValidData = {
+    validIp: false,
+    validDomain: false,
+    validSrc: validSources,
+  };
+
+  if (/^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/.test(ip))
+    validData.validIp = true;
+
+  if (
+    /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(
+      domain
     )
-      validData.validDomain = true;
-  
-    return validData;
-  }
-  
-  function setIpServices(ip: string) {
-    const services = [
-      {
-        url: `https://www.rdap.net/ip/${ip}`,
-      },
-      {
-        url: `https://www.virustotal.com/api/v3/ip_addresses/${ip}`,
-        options: {
-          headers: {
-            "x-apikey": process.env.VIRUSTOTALKEY,
-          },
-        },
-      },
-    ];
-  
-    return services;
-  }
-  
-  function setDomainServices(domain: string) {
-    const services = [
-      {
-        url: `https://www.rdap.net/domain/${domain}`,
-      },
-      {
-        url: `https://www.virustotal.com/api/v3/domains/${domain}`,
-        options: {
-          headers: {
-            "x-apikey": process.env.VIRUSTOTALKEY,
-          },
-        },
-      },
-    ];
-  
-    return services;
-  }
-  
-  async function sources(services: any) {
-    let result: any = await Promise.allSettled(
-      services.map((service: any) =>
-        axios.get(service.url, service.options ? service.options : undefined)
-      )
-    );
-  
-    return result.map((response: any) => {
-      if (response.status == "fulfilled") {
-        const { config, data } = response.value;
-        return { url: config.url, data };
-      } else {
-        const { message, config } = response.reason;
-        return { message, config };
+  )
+    validData.validDomain = true;
+
+  if (typeof sources == "string") {
+    const srcWithoutSpaces = sources.replace(/\s/g, "");
+    const srcArray = srcWithoutSpaces.split(",");
+    srcArray.forEach((element) => {
+      if (!validSources.some((source) => source == element)) {
+        throw `${element} is an invalid source`;
       }
     });
+    validData.validSrc = srcArray;
   }
 
-router.get("/", async (req, res, next) => {
-  const ip: string = req.query.ip as string;
-  const domain: string = req.query.domain as string;
-  let domainInfo = {};
-  let ipInfo = {};
+  return validData;
+}
 
-  const validatedData: ValidData = validateData(ip, domain);
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    logger.info(`Get lookup`);
+    const sources: string = req.query.services as string;
+    const ip: string = req.query.ip as string;
+    const domain: string = req.query.domain as string;
+    let domainResult = {};
+    let ipResult = {};
 
-  if (validatedData.validDomain) {
-    const domainServices = setDomainServices(domain);
-    domainInfo = await sources(domainServices); //add workers here
+    const validatedData: ValidData = validateData(ip, domain, sources);
+
+    if (validatedData.validDomain) {
+      const domainServices = configDomainSources(
+        domain,
+        validatedData.validSrc
+      );
+      let workerPool: any;
+      let domainInfo: unknown;
+
+      if (process.env.WORKER_POOL_ENABLED === "1") {
+        workerPool = get();
+        domainInfo = await workerPool.getInfo(domain, domainServices);
+      } else {
+        domainInfo = await getInfo(domain, domainServices);
+      }
+
+      domainResult = {
+        domain,
+        domainInfo,
+      };
+    }
+
+    if (validatedData.validIp) {
+      const ipServices = configIpSources(ip, validatedData.validSrc);
+      let workerPool: any;
+      let ipInfo: unknown;
+
+      if (process.env.WORKER_POOL_ENABLED === "1") {
+        workerPool = get();
+        ipInfo = await workerPool.getInfo(ip, ipServices);
+      } else {
+        ipInfo = await getInfo(ip, ipServices);
+      }
+
+      ipResult = {
+        ip,
+        ipInfo,
+      };
+    }
+
+    return res.json({ ipResult, domainResult });
+  } catch (e) {
+    logger.error(e);
+    res.status(400).json({ message: e });
   }
-
-  if (validatedData.validIp) {
-    const ipServices = setIpServices(ip);
-    ipInfo = await sources(ipServices); //add workers here
-  }
-
-  return res.json({ ipInfo, domainInfo });
 });
 
 export default router;

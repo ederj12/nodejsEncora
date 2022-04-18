@@ -1,58 +1,22 @@
 import "dotenv/config";
-import express from "express";
+import express, { Express } from "express";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.json"
+import swaggerDocument from "./swagger.json";
 import lookup from "./routers/lookup";
+import { logger } from "./config/constants";
+import { init } from "./utils/workerPool";
 
-const app: express.Application = express();
+const app: Express = express();
 
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/lookup", lookup);
 
-
-app.listen(process.env.PORT, () =>
-  console.log(`API listening on port ${process.env.PORT}!`)
-);
-
-////////GRAPHQL PENDING TO ADD
-/*
-
-import graphqlHTTP from "express-graphql";
-import { makeExecutableSchema } from "graphql-tools";
-
-let typeDefs: any = [
-    `
-    type Query {
-      hello: String
-    }
-       
-    type Mutation {
-      hello(message: String) : String
-    }
-  `,
-  ];
-
-let helloMessage: String = "World!";
-
-let resolvers = {
-  Query: {
-    hello: () => helloMessage,
-  },
-  Mutation: {
-    hello: (_: any, helloData: any) => {
-      helloMessage = helloData.message;
-      return helloMessage;
-    },
-  },
-};
-
-app.use(
-    "/graphql",
-    graphqlHTTP({
-      schema: makeExecutableSchema({ typeDefs, resolvers }),
-      graphiql: true,
-    })
-  );
-
-  */
+app.listen(process.env.PORT, async () => {
+  if (process.env.WORKER_POOL_ENABLED === "1") {
+    const options = { minWorkers: 2, maxWorkers: 2, workerType: "thread" };
+    //config workerpool
+    await init(options);
+  }
+  logger.info(`API listening on port ${process.env.PORT}!`);
+});

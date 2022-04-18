@@ -31,4 +31,9 @@ What we are looking for:
 
 How you organize your project
 What tooling you use (linting, unit testing) ((bonus points if you use our tslint/prettify rules!))
-Creativity and performanc
+Creativity and performance
+
+docker build . -t encora/node-web-app
+docker run -p 3000:3030 -d encora/node-web-app
+
+docker exec -it #ID /bin/bash
