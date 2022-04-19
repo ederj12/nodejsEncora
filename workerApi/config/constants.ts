@@ -1,6 +1,9 @@
 import { createLogger, transports, format } from "winston";
 
-export const validSources: Array<string> = ["RDAP", "VIRUSTOTAL"];
+export const RDAP: string = "RDAP";
+export const VIRUSTOTAL: string = "VIRUSTOTAL";
+
+export const validSources: Array<string> = [RDAP, VIRUSTOTAL];
 
 export type ValidData = {
   isIp: boolean;

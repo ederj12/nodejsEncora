@@ -1,0 +1,1213 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Worker API",
+    "description": "Worker is an API that handle request using multithreads in order to take advantage of the hardware",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Swagger API Team",
+      "email": "apiteam@swagger.io",
+      "url": "http://swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:3001",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/workerLookup": {
+      "post": {
+        "description": "Data to gather the info of the ip or domain",
+        "parameters": [
+          {
+            "name": "lookup data",
+            "in": "body",
+            "description": "Data to gather the info of the ip or domain",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/workerLookup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "worker lookup response",
+            "schema": {
+              "example": {
+                "lookup": "google.com",
+                "lookupInfo": [
+                  {
+                    "service": "RDAP",
+                    "data": {
+                      "objectClassName": "domain",
+                      "handle": "2138514_DOMAIN_COM-VRSN",
+                      "ldhName": "GOOGLE.COM",
+                      "links": [
+                        {
+                          "value": "https://rdap.verisign.com/com/v1/domain/GOOGLE.COM",
+                          "rel": "self",
+                          "href": "https://rdap.verisign.com/com/v1/domain/GOOGLE.COM",
+                          "type": "application/rdap+json"
+                        },
+                        {
+                          "value": "https://rdap.markmonitor.com/rdap/domain/GOOGLE.COM",
+                          "rel": "related",
+                          "href": "https://rdap.markmonitor.com/rdap/domain/GOOGLE.COM",
+                          "type": "application/rdap+json"
+                        }
+                      ],
+                      "status": [
+                        "client delete prohibited",
+                        "client transfer prohibited",
+                        "client update prohibited",
+                        "server delete prohibited",
+                        "server transfer prohibited",
+                        "server update prohibited"
+                      ],
+                      "entities": [
+                        {
+                          "objectClassName": "entity",
+                          "handle": "292",
+                          "roles": ["registrar"],
+                          "publicIds": [
+                            {
+                              "type": "IANA Registrar ID",
+                              "identifier": "292"
+                            }
+                          ],
+                          "vcardArray": [
+                            "vcard",
+                            [
+                              ["version", {}, "text", "4.0"],
+                              ["fn", {}, "text", "MarkMonitor Inc."]
+                            ]
+                          ],
+                          "entities": [
+                            {
+                              "objectClassName": "entity",
+                              "roles": ["abuse"],
+                              "vcardArray": [
+                                "vcard",
+                                [
+                                  ["version", {}, "text", "4.0"],
+                                  ["fn", {}, "text", ""],
+                                  [
+                                    "tel",
+                                    {
+                                      "type": "voice"
+                                    },
+                                    "uri",
+                                    "tel:+1.2083895740"
+                                  ],
+                                  [
+                                    "email",
+                                    {},
+                                    "text",
+                                    "abusecomplaints@markmonitor.com"
+                                  ]
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "events": [
+                        {
+                          "eventAction": "registration",
+                          "eventDate": "1997-09-15T04:00:00Z"
+                        },
+                        {
+                          "eventAction": "expiration",
+                          "eventDate": "2028-09-14T04:00:00Z"
+                        },
+                        {
+                          "eventAction": "last changed",
+                          "eventDate": "2019-09-09T15:39:04Z"
+                        },
+                        {
+                          "eventAction": "last update of RDAP database",
+                          "eventDate": "2022-04-19T21:23:15Z"
+                        }
+                      ],
+                      "secureDNS": {
+                        "delegationSigned": false
+                      },
+                      "nameservers": [
+                        {
+                          "objectClassName": "nameserver",
+                          "ldhName": "NS1.GOOGLE.COM"
+                        },
+                        {
+                          "objectClassName": "nameserver",
+                          "ldhName": "NS2.GOOGLE.COM"
+                        },
+                        {
+                          "objectClassName": "nameserver",
+                          "ldhName": "NS3.GOOGLE.COM"
+                        },
+                        {
+                          "objectClassName": "nameserver",
+                          "ldhName": "NS4.GOOGLE.COM"
+                        }
+                      ],
+                      "rdapConformance": [
+                        "rdap_level_0",
+                        "icann_rdap_technical_implementation_guide_0",
+                        "icann_rdap_response_profile_0"
+                      ],
+                      "notices": [
+                        {
+                          "title": "Terms of Use",
+                          "description": ["Service subject to Terms of Use."],
+                          "links": [
+                            {
+                              "href": "https://www.verisign.com/domain-names/registration-data-access-protocol/terms-service/index.xhtml",
+                              "type": "text/html"
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Status Codes",
+                          "description": [
+                            "For more information on domain status codes, please visit https://icann.org/epp"
+                          ],
+                          "links": [
+                            {
+                              "href": "https://icann.org/epp",
+                              "type": "text/html"
+                            }
+                          ]
+                        },
+                        {
+                          "title": "RDDS Inaccuracy Complaint Form",
+                          "description": [
+                            "URL of the ICANN RDDS Inaccuracy Complaint Form: https://icann.org/wicf"
+                          ],
+                          "links": [
+                            {
+                              "href": "https://icann.org/wicf",
+                              "type": "text/html"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "service": "VIRUSTOTAL",
+                    "data": {
+                      "data": {
+                        "attributes": {
+                          "last_dns_records": [
+                            {
+                              "priority": 8,
+                              "type": "MX",
+                              "value": "smtp.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "rname": "dns-admin.google.com",
+                              "retry": 900,
+                              "value": "ns1.google.com",
+                              "minimum": 60,
+                              "refresh": 900,
+                              "expire": 1800,
+                              "ttl": 49,
+                              "serial": 442502252,
+                              "type": "SOA"
+                            },
+                            {
+                              "type": "AAAA",
+                              "value": "2404:6800:4008:c13::71",
+                              "ttl": 300
+                            },
+                            {
+                              "priority": 40,
+                              "type": "MX",
+                              "value": "alt3.aspmx.l.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "type": "AAAA",
+                              "value": "2404:6800:4008:c13::8a",
+                              "ttl": 300
+                            },
+                            {
+                              "priority": 20,
+                              "type": "MX",
+                              "value": "alt1.aspmx.l.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.100",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "MS=E4A68B9AB2BB9670BCE15412F62916164C0B20BB",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.138",
+                              "ttl": 300
+                            },
+                            {
+                              "flag": 0,
+                              "tag": "issue",
+                              "type": "CAA",
+                              "value": "pki.goog",
+                              "ttl": 21600
+                            },
+                            {
+                              "priority": 50,
+                              "type": "MX",
+                              "value": "alt4.aspmx.l.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "google-site-verification=wD8N7i1JTNTkezJ49swvWW48f8_9xveREV4oB-0Hf5o",
+                              "ttl": 3600
+                            },
+                            {
+                              "priority": 10,
+                              "type": "MX",
+                              "value": "aspmx.l.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "priority": 30,
+                              "type": "MX",
+                              "value": "alt2.aspmx.l.google.com",
+                              "ttl": 248
+                            },
+                            {
+                              "type": "NS",
+                              "value": "ns3.google.com",
+                              "ttl": 21600
+                            },
+                            {
+                              "type": "NS",
+                              "value": "ns2.google.com",
+                              "ttl": 21600
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "apple-domain-verification=30afIBcvSuDV2PLX",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "facebook-domain-verification=22rm551cu4k0ab0bxsw536tlds4h95",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "NS",
+                              "value": "ns4.google.com",
+                              "ttl": 21600
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.113",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "docusign=1b0a6754-49b1-4db5-8540-d2c12664b289",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.102",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "AAAA",
+                              "value": "2404:6800:4008:c13::64",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.139",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "A",
+                              "value": "142.250.157.101",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "AAAA",
+                              "value": "2404:6800:4008:c13::8b",
+                              "ttl": 300
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "globalsign-smime-dv=CDYX+XFHUw2wml6/Gb8+59BsH31KzUr6c1l2BPvqKX8=",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "google-site-verification=TV9-DBe4R80X4v0M4U_bd_J9cpOJM0nikft0jAgjmsQ",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "TXT",
+                              "value": "v=spf1 include:_spf.google.com ~all",
+                              "ttl": 3600
+                            },
+                            {
+                              "type": "NS",
+                              "value": "ns1.google.com",
+                              "ttl": 21600
+                            }
+                          ],
+                          "jarm": "27d40d40d29d40d1dc42d43d00041d4689ee210389f4f6b4b5b1b93f92252d",
+                          "whois": "Creation Date: 1997-09-15T04:00:00Z\nDNSSEC: unsigned\nDomain Name: GOOGLE.COM\nDomain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nDomain Status: clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited\nDomain Status: serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited\nDomain Status: serverTransferProhibited https://icann.org/epp#serverTransferProhibited\nDomain Status: serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited\nName Server: NS1.GOOGLE.COM\nName Server: NS2.GOOGLE.COM\nName Server: NS3.GOOGLE.COM\nName Server: NS4.GOOGLE.COM\nRegistrar Abuse Contact Email: abusecomplaints@markmonitor.com\nRegistrar Abuse Contact Phone: +1.2083895740\nRegistrar IANA ID: 292\nRegistrar URL: http://www.markmonitor.com\nRegistrar WHOIS Server: whois.markmonitor.com\nRegistrar: MarkMonitor Inc.\nRegistry Domain ID: 2138514_DOMAIN_COM-VRSN\nRegistry Expiry Date: 2028-09-14T04:00:00Z\nUpdated Date: 2019-09-09T15:39:04Z",
+                          "last_https_certificate_date": 1650370209,
+                          "tags": [],
+                          "popularity_ranks": {
+                            "Majestic": {
+                              "timestamp": 1650387483,
+                              "rank": 1
+                            },
+                            "Statvoo": {
+                              "timestamp": 1650387482,
+                              "rank": 1
+                            },
+                            "Alexa": {
+                              "timestamp": 1650301080,
+                              "rank": 1
+                            },
+                            "Cisco Umbrella": {
+                              "timestamp": 1650387482,
+                              "rank": 1
+                            },
+                            "Quantcast": {
+                              "timestamp": 1585755370,
+                              "rank": 1
+                            }
+                          },
+                          "last_dns_records_date": 1650370209,
+                          "last_analysis_stats": {
+                            "harmless": 79,
+                            "malicious": 0,
+                            "suspicious": 0,
+                            "undetected": 10,
+                            "timeout": 0
+                          },
+                          "creation_date": 874296000,
+                          "whois_date": 1649550565,
+                          "reputation": 375,
+                          "registrar": "MarkMonitor Inc.",
+                          "last_analysis_results": {
+                            "CMC Threat Intelligence": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "CMC Threat Intelligence"
+                            },
+                            "Snort IP sample list": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Snort IP sample list"
+                            },
+                            "0xSI_f33d": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "0xSI_f33d"
+                            },
+                            "Armis": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Armis"
+                            },
+                            "ViriBack": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ViriBack"
+                            },
+                            "Comodo Valkyrie Verdict": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "Comodo Valkyrie Verdict"
+                            },
+                            "PhishLabs": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "PhishLabs"
+                            },
+                            "K7AntiVirus": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "K7AntiVirus"
+                            },
+                            "CINS Army": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "CINS Army"
+                            },
+                            "Quttera": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Quttera"
+                            },
+                            "OpenPhish": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "OpenPhish"
+                            },
+                            "VX Vault": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "VX Vault"
+                            },
+                            "Web Security Guard": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Web Security Guard"
+                            },
+                            "Scantitan": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Scantitan"
+                            },
+                            "AlienVault": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "AlienVault"
+                            },
+                            "Sophos": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Sophos"
+                            },
+                            "Phishtank": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Phishtank"
+                            },
+                            "EonScope": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "EonScope"
+                            },
+                            "Cyan": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "Cyan"
+                            },
+                            "Spam404": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Spam404"
+                            },
+                            "SecureBrain": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "SecureBrain"
+                            },
+                            "Hoplite Industries": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Hoplite Industries"
+                            },
+                            "CRDF": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "CRDF"
+                            },
+                            "Fortinet": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Fortinet"
+                            },
+                            "alphaMountain.ai": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "alphaMountain.ai"
+                            },
+                            "Lionic": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Lionic"
+                            },
+                            "Virusdie External Site Scan": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Virusdie External Site Scan"
+                            },
+                            "Google Safebrowsing": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Google Safebrowsing"
+                            },
+                            "SafeToOpen": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "SafeToOpen"
+                            },
+                            "ADMINUSLabs": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ADMINUSLabs"
+                            },
+                            "CyberCrime": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "CyberCrime"
+                            },
+                            "Heimdal Security": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Heimdal Security"
+                            },
+                            "AutoShun": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "AutoShun"
+                            },
+                            "Trustwave": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Trustwave"
+                            },
+                            "AICC (MONITORAPP)": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "AICC (MONITORAPP)"
+                            },
+                            "CyRadar": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "CyRadar"
+                            },
+                            "Dr.Web": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Dr.Web"
+                            },
+                            "Emsisoft": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Emsisoft"
+                            },
+                            "Abusix": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Abusix"
+                            },
+                            "Webroot": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Webroot"
+                            },
+                            "Avira": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Avira"
+                            },
+                            "securolytics": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "securolytics"
+                            },
+                            "Antiy-AVL": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Antiy-AVL"
+                            },
+                            "Acronis": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Acronis"
+                            },
+                            "Quick Heal": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Quick Heal"
+                            },
+                            "ESTsecurity-Threat Inside": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ESTsecurity-Threat Inside"
+                            },
+                            "DNS8": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "DNS8"
+                            },
+                            "benkow.cc": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "benkow.cc"
+                            },
+                            "EmergingThreats": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "EmergingThreats"
+                            },
+                            "Chong Lua Dao": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Chong Lua Dao"
+                            },
+                            "Yandex Safebrowsing": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Yandex Safebrowsing"
+                            },
+                            "MalwareDomainList": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "MalwareDomainList"
+                            },
+                            "Lumu": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "Lumu"
+                            },
+                            "zvelo": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "zvelo"
+                            },
+                            "Kaspersky": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Kaspersky"
+                            },
+                            "Segasec": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Segasec"
+                            },
+                            "Sucuri SiteCheck": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Sucuri SiteCheck"
+                            },
+                            "desenmascara.me": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "desenmascara.me"
+                            },
+                            "URLhaus": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "URLhaus"
+                            },
+                            "PREBYTES": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "PREBYTES"
+                            },
+                            "StopForumSpam": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "StopForumSpam"
+                            },
+                            "Blueliv": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Blueliv"
+                            },
+                            "Netcraft": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "Netcraft"
+                            },
+                            "ZeroCERT": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ZeroCERT"
+                            },
+                            "Phishing Database": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Phishing Database"
+                            },
+                            "MalwarePatrol": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "MalwarePatrol"
+                            },
+                            "MalBeacon": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "MalBeacon"
+                            },
+                            "IPsum": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "IPsum"
+                            },
+                            "Malwared": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Malwared"
+                            },
+                            "BitDefender": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "BitDefender"
+                            },
+                            "GreenSnow": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "GreenSnow"
+                            },
+                            "G-Data": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "G-Data"
+                            },
+                            "StopBadware": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "StopBadware"
+                            },
+                            "SCUMWARE.org": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "SCUMWARE.org"
+                            },
+                            "malwares.com URL checker": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "malwares.com URL checker"
+                            },
+                            "NotMining": {
+                              "category": "undetected",
+                              "result": "unrated",
+                              "method": "blacklist",
+                              "engine_name": "NotMining"
+                            },
+                            "Forcepoint ThreatSeeker": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Forcepoint ThreatSeeker"
+                            },
+                            "Certego": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Certego"
+                            },
+                            "ESET": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ESET"
+                            },
+                            "Threatsourcing": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Threatsourcing"
+                            },
+                            "MalSilo": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "MalSilo"
+                            },
+                            "Nucleon": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Nucleon"
+                            },
+                            "BADWARE.INFO": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "BADWARE.INFO"
+                            },
+                            "ThreatHive": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "ThreatHive"
+                            },
+                            "FraudScore": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "FraudScore"
+                            },
+                            "Tencent": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Tencent"
+                            },
+                            "Bfore.Ai PreCrime": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Bfore.Ai PreCrime"
+                            },
+                            "Baidu-International": {
+                              "category": "harmless",
+                              "result": "clean",
+                              "method": "blacklist",
+                              "engine_name": "Baidu-International"
+                            }
+                          },
+                          "last_update_date": 1568043544,
+                          "last_modification_date": 1650389007,
+                          "last_https_certificate": {
+                            "size": 3548,
+                            "public_key": {
+                              "ec": {
+                                "oid": "secp256r1",
+                                "pub": "04615e720614fa6631ee6261fb6d9a9fc6025fb7906427c57318dcb35ca99373a4531b523930f1624b4dc3511ef142da68eaf744f57d5b229d3b452c22fffd9013"
+                              },
+                              "algorithm": "EC"
+                            },
+                            "thumbprint_sha256": "7cf98f16291d62ae0d47f1fe9e8862ace7b2b264c18af3229c93aa99a9462623",
+                            "tags": [],
+                            "cert_signature": {
+                              "signature": "8ed603e04de47c003e3848b48fab16e77a2145f34d994ba8bb17ea9d5f84b24ec5530a79e968ba21cfd15aec6097dd2b364052f6fb5293d170ca491399df4682140893c7296b4c35e718ba9a913a9c30889a6694c359f09c88886e0914ca081d82d03a1e3fb1622170a3f4dfa9f3c6c006ad6537efa535c7cb9b5e6736f55e071ff763a9462dcda755e82dd81fd3c12b4eb6bde4fc728c0865b10fe6187e51a1140f0533204d731aa7e421a755c47c41bf6480af4b8b4ae28f6744d4537e0d8a4daf0d59904945ec06a0b6fe74f6e31527a1c440bf5de1e280bcbd7a9f6f40032c02586562f57326d0a2eaa3e41c656e5466b97b4529bcd9d83bceb219dad249",
+                              "signature_algorithm": "sha256RSA"
+                            },
+                            "validity": {
+                              "not_after": "2022-06-20 01:19:43",
+                              "not_before": "2022-03-28 01:19:44"
+                            },
+                            "version": "V3",
+                            "extensions": {
+                              "certificate_policies": [
+                                "2.23.140.1.2.1",
+                                "1.3.6.1.4.1.11129.2.5.3"
+                              ],
+                              "extended_key_usage": ["serverAuth"],
+                              "authority_key_identifier": {
+                                "keyid": "8a747faf85cdee95cd3d9cd0e24614f371351d27"
+                              },
+                              "subject_alternative_name": [
+                                "*.google.com",
+                                "*.appengine.google.com",
+                                "*.bdn.dev",
+                                "*.cloud.google.com",
+                                "*.crowdsource.google.com",
+                                "*.datacompute.google.com",
+                                "*.google.ca",
+                                "*.google.cl",
+                                "*.google.co.in",
+                                "*.google.co.jp",
+                                "*.google.co.uk",
+                                "*.google.com.ar",
+                                "*.google.com.au",
+                                "*.google.com.br",
+                                "*.google.com.co",
+                                "*.google.com.mx",
+                                "*.google.com.tr",
+                                "*.google.com.vn",
+                                "*.google.de",
+                                "*.google.es",
+                                "*.google.fr",
+                                "*.google.hu",
+                                "*.google.it",
+                                "*.google.nl",
+                                "*.google.pl",
+                                "*.google.pt",
+                                "*.googleadapis.com",
+                                "*.googleapis.cn",
+                                "*.googlevideo.com",
+                                "*.gstatic.cn",
+                                "*.gstatic-cn.com",
+                                "googlecnapps.cn",
+                                "*.googlecnapps.cn",
+                                "googleapps-cn.com",
+                                "*.googleapps-cn.com",
+                                "gkecnapps.cn",
+                                "*.gkecnapps.cn",
+                                "googledownloads.cn",
+                                "*.googledownloads.cn",
+                                "recaptcha.net.cn",
+                                "*.recaptcha.net.cn",
+                                "recaptcha-cn.net",
+                                "*.recaptcha-cn.net",
+                                "widevine.cn",
+                                "*.widevine.cn",
+                                "ampproject.org.cn",
+                                "*.ampproject.org.cn",
+                                "ampproject.net.cn",
+                                "*.ampproject.net.cn",
+                                "google-analytics-cn.com",
+                                "*.google-analytics-cn.com",
+                                "googleadservices-cn.com",
+                                "*.googleadservices-cn.com",
+                                "googlevads-cn.com",
+                                "*.googlevads-cn.com",
+                                "googleapis-cn.com",
+                                "*.googleapis-cn.com",
+                                "googleoptimize-cn.com",
+                                "*.googleoptimize-cn.com",
+                                "doubleclick-cn.net",
+                                "*.doubleclick-cn.net",
+                                "*.fls.doubleclick-cn.net",
+                                "*.g.doubleclick-cn.net",
+                                "doubleclick.cn",
+                                "*.doubleclick.cn",
+                                "*.fls.doubleclick.cn",
+                                "*.g.doubleclick.cn",
+                                "dartsearch-cn.net",
+                                "*.dartsearch-cn.net",
+                                "googletraveladservices-cn.com",
+                                "*.googletraveladservices-cn.com",
+                                "googletagservices-cn.com",
+                                "*.googletagservices-cn.com",
+                                "googletagmanager-cn.com",
+                                "*.googletagmanager-cn.com",
+                                "googlesyndication-cn.com",
+                                "*.googlesyndication-cn.com",
+                                "*.safeframe.googlesyndication-cn.com",
+                                "app-measurement-cn.com",
+                                "*.app-measurement-cn.com",
+                                "gvt1-cn.com",
+                                "*.gvt1-cn.com",
+                                "gvt2-cn.com",
+                                "*.gvt2-cn.com",
+                                "2mdn-cn.net",
+                                "*.2mdn-cn.net",
+                                "googleflights-cn.net",
+                                "*.googleflights-cn.net",
+                                "admob-cn.com",
+                                "*.admob-cn.com",
+                                "*.gstatic.com",
+                                "*.metric.gstatic.com",
+                                "*.gvt1.com",
+                                "*.gcpcdn.gvt1.com",
+                                "*.gvt2.com",
+                                "*.gcp.gvt2.com",
+                                "*.url.google.com",
+                                "*.youtube-nocookie.com",
+                                "*.ytimg.com",
+                                "android.com",
+                                "*.android.com",
+                                "*.flash.android.com",
+                                "g.cn",
+                                "*.g.cn",
+                                "g.co",
+                                "*.g.co",
+                                "goo.gl",
+                                "www.goo.gl",
+                                "google-analytics.com",
+                                "*.google-analytics.com",
+                                "google.com",
+                                "googlecommerce.com",
+                                "*.googlecommerce.com",
+                                "ggpht.cn",
+                                "*.ggpht.cn",
+                                "urchin.com",
+                                "*.urchin.com",
+                                "youtu.be",
+                                "youtube.com",
+                                "*.youtube.com",
+                                "youtubeeducation.com",
+                                "*.youtubeeducation.com",
+                                "youtubekids.com",
+                                "*.youtubekids.com",
+                                "yt.be",
+                                "*.yt.be",
+                                "android.clients.google.com",
+                                "developer.android.google.cn",
+                                "developers.android.google.cn",
+                                "source.android.google.cn"
+                              ],
+                              "tags": [],
+                              "subject_key_identifier": "8c8f051c21aede03586ca1941746a77bf7c295c2",
+                              "crl_distribution_points": [
+                                "http://crls.pki.goog/gts1c3/QqFxbi9M48c.crl"
+                              ],
+                              "key_usage": ["ff"],
+                              "1.3.6.1.4.1.11129.2.4.2": "0481f400f200770041c8cab1df22464a10c6a13a0942875e4e318b1b03ebeb4b",
+                              "CA": true,
+                              "ca_information_access": {
+                                "CA Issuers": "http://pki.goog/repo/certs/gts1c3.der",
+                                "OCSP": "http://ocsp.pki.goog/gts1c3"
+                              }
+                            },
+                            "signature_algorithm": "sha256RSA",
+                            "serial_number": "5fec2188d7658a640a000000013c6752",
+                            "thumbprint": "9c0367e34eb76621f35db71ff20633bc2cad176a",
+                            "issuer": {
+                              "C": "US",
+                              "CN": "GTS CA 1C3",
+                              "O": "Google Trust Services LLC"
+                            },
+                            "subject": {
+                              "CN": "*.google.com"
+                            }
+                          },
+                          "categories": {
+                            "Forcepoint ThreatSeeker": "search engines and portals",
+                            "Sophos": "search engines",
+                            "BitDefender": "searchengines",
+                            "alphaMountain.ai": "Search Engines/Portals"
+                          },
+                          "total_votes": {
+                            "harmless": 236,
+                            "malicious": 39
+                          }
+                        },
+                        "type": "domain",
+                        "id": "google.com",
+                        "links": {
+                          "self": "https://www.virustotal.com/api/v3/domains/google.com"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "workerLookup": {
+      "type": "object",
+      "required": ["lookup", "validatedData"],
+      "properties": {
+        "lookup": {
+          "type": "string"
+        },
+        "validatedData": {
+          "type": "object",
+          "properties": {
+            "isDomain": {
+              "type": "boolean"
+            },
+            "isIp": {
+              "type": "boolean"
+            },
+            "validSrc": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "example": {
+        "lookup": "google.com",
+        "validatedData": {
+          "isDomain": true,
+          "isIp": false,
+          "validSrc": ["RDAP", "VIRUSTOTAL"]
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
