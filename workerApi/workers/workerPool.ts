@@ -9,13 +9,10 @@ export const initPool = async ()=>{
   logger.info(`Init Pool`);
   
   pool =  await new Piscina({
-    //name: 'handleRequest',
-    filename: path.resolve(__dirname, './getInfo.js'),
+    filename: path.resolve(__dirname, '../services/services.js'),
     minThreads: 2,
     maxThreads: 2
   }); 
-
-  logger.info(`Init Pool ${JSON.stringify(pool)}`)
 }
 
 export const getPool =()=>{

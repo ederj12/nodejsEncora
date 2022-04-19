@@ -1,5 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from "express";
-import { getPool } from "../utils/workerPool";
+import axios from "axios";
 import { logger, validSources, ValidData } from "../config/constants";
 const router: Router = express.Router();
 const ipRx: RegExp = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
@@ -37,6 +37,18 @@ function validateData(lookup: string, sources: string): ValidData {
   return validData;
 }
 
+async function workersLookupRequest(validatedData: ValidData, lookup: string) {
+  
+  const data = {
+    lookup,
+    validatedData,
+  };
+
+  const result: any = await axios.post(`${process.env.WORKERAPI}/workerLookup`, data);
+
+  return result.data;
+}
+
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
 
@@ -46,10 +58,8 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     const lookup: string = req.query.lookup as string;
 
     const validatedData: ValidData = validateData(lookup, sources);
-
-    const workerPool = getPool();
     
-    const result = await workerPool.run({validatedData, lookup});
+    const result = await workersLookupRequest(validatedData, lookup);
     
     return res.status(200).json(result);
 
