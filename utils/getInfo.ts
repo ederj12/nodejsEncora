@@ -1,21 +1,24 @@
 import axios from "axios";
-import workerPool from "workerpool";
-import { logger } from "../config/constants";
+import { logger, ValidData } from "../config/constants";
+import { configIpSources, configDomainSources } from "../config/sourceConfig";
 
-export const getInfo = async (ipOrDomain: string, services: any) => {
+
+const getInfo = async (ipOrDomain: string, services: any) => {
   logger.info(`GetInfo for ${ipOrDomain}`);
-  
-  const result: any = await Promise.allSettled(
-    services.map((service: any) =>
-      axios.get(service.url, service.options ? service.options : undefined)
-    )
+
+  const promises = services.map((service: any) =>
+    axios.get(service.url, service.options ? service.options : undefined)
   );
 
+  const result: any = await Promise.allSettled(promises);
+
   const mapResponse = result.map((response: any) => {
+    //success
     if (response.status == "fulfilled") {
       const { config, data } = response.value;
       return { url: config.url, data };
     } else {
+      //error
       const { message, config } = response.reason;
       return { message, config };
     }
@@ -24,6 +27,23 @@ export const getInfo = async (ipOrDomain: string, services: any) => {
   return mapResponse;
 };
 
-workerPool.worker({
-  getInfo,
-});
+const handleRequest = async({validatedData, lookup}:{validatedData: ValidData, lookup: string})=>{
+  
+  let sources = {};
+
+  if (validatedData.isDomain) {
+    sources = configDomainSources(lookup,validatedData.validSrc);
+  }
+
+  if (validatedData.isIp) {
+    sources = configIpSources(lookup, validatedData.validSrc);
+  }
+
+  const lookupInfo = await getInfo(lookup, sources);
+
+  const lookupResult = { lookup, lookupInfo };
+
+  return lookupResult;
+}
+
+export default handleRequest;

@@ -1,6 +1,18 @@
 import { createLogger, transports, format } from "winston";
 
-export const validSources = ["RDAP", "VIRUSTOTAL"];
+export const validSources: Array<string> = ["RDAP", "VIRUSTOTAL"];
+
+export type ValidData = {
+  isIp: boolean;
+  isDomain: boolean;
+  validSrc: Array<string>;
+};
+
+export type sourceConfig = {
+  id: string,
+  url: string,
+  options?: any
+}
 
 export const logger = createLogger({
     transports: [new transports.Console()],

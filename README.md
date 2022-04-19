@@ -34,6 +34,39 @@ What tooling you use (linting, unit testing) ((bonus points if you use our tslin
 Creativity and performance
 
 docker build . -t encora/node-web-app
-docker run -p 3000:3030 -d encora/node-web-app
+docker run -p 3000:3000 -d encora/node-web-app
 
 docker exec -it #ID /bin/bash
+
+testing
+52.201.131.218
+52.205.11.111
+15.185.63.107
+15.185.63.176
+52.60.48.246
+52.60.90.232
+13.244.48.162
+13.244.136.56
+18.162.186.232
+18.162.226.126
+
+skypeassets.com
+a.com
+btstatic.com
+researchnow.com
+conviva.com
+hotmail.com
+bittorrent.com
+openbittorrent.com
+vindicosuite.com
+duba.net
+google.com
+facebook.com
+doubleclick.net
+google-analytics.com
+akamaihd.net
+googlesyndication.com
+googleapis.com
+googleadservices.com
+facebook.net
+youtube.com

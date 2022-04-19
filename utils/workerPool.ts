@@ -1,16 +1,24 @@
 
-import workerPool from "workerpool"
 import path from "path";
 import { logger } from "../config/constants";
+import Piscina from 'piscina'; 
 
-let poolProxy: any = null
+let pool: Piscina;
 
-export const init = async (options:any) => {
-  const pool:any = workerPool.pool(path.join(__dirname, './getInfo.js'), options)
-  poolProxy = await pool.proxy()
-  logger.info(`Worker Threads Enabled - Min Workers: ${pool.minWorkers} - Max Workers: ${pool.maxWorkers} - Worker Type: ${pool.workerType}`)
+export const initPool = async ()=>{
+  logger.info(`Init Pool`);
+  
+  pool =  await new Piscina({
+    //name: 'handleRequest',
+    filename: path.resolve(__dirname, './getInfo.js'),
+    minThreads: 2,
+    maxThreads: 2
+  }); 
+
+  logger.info(`Init Pool ${JSON.stringify(pool)}`)
 }
 
-export const get = () => {
-  return poolProxy
+export const getPool =()=>{
+  logger.info(`Get Pool`)
+  return pool;
 }
